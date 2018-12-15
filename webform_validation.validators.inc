@@ -151,11 +151,11 @@ function webform_validation_webform_validation_validators() {
       'custom_error' => TRUE,
       'custom_data' => array(
         'label' => t('Comparison operator'),
-        'description' => t('Specify the comparison operator you want to use. Must be one of: >, >=, <, <=. The validator will compare the first component with the second using this operator. If the components are of type email, they will get case-insensitive comparison.'),
+        'description' => t('Specify the comparison operator you want to use. Must be one of: >, >=, <, <=, or !=. The validator will compare the first component with the second using this operator. If the components are of type email, they will get case-insensitive comparison.'),
       ),
       'min_components' => 2,
       'max_components' => 2,
-      'description' => t('Compare two values for greater than (>), less than (<), greater than or equal to (>=), or less than or equal to (<=).'),
+      'description' => t('Compare two values for greater than (>), less than (<), greater than or equal to (>=), less than or equal to (<=), or not equals "(!=)".'),
     ),
     'unique' => array(
       'name' => t('Unique values'),
@@ -681,6 +681,12 @@ function webform_validation_webform_validation_validate($validator_name, $items,
 
         case '<=':
           if (!($entry[1]['value'] <= $entry[2]['value'])) {
+            $error = TRUE;
+          }
+          break;
+
+        case '!=':
+          if (!($entry[1]['value'] != $entry[2]['value'])) {
             $error = TRUE;
           }
           break;
